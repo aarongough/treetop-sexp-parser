@@ -1,0 +1,55 @@
+= Treetop S-Expression Parser
+
+This is a very small & simple demonstration parser built using {Treetop}[http://treetop.rubyforge.org/]. It is meant solely to teach the very basics of implementing a grammar in Treetop, not as an actual parser for S-Expressions (which is why it's not packaged as a gem, and why it has no tests).
+
+A real parser *should* improve in several main areas:
+
+* Test coverage: Unit tests are vital for parsers.
+* Performance: This example is slow in the extreme compared to simpler parsing methods, a real parser should be performant.
+* Error reporting: Even the best written parser is a complete pain if it doesn't have intelligent error reporting.
+
+=== The Core Grammar
+
+For easy reference the core grammar of the parser is reproduced here:
+
+  grammar Sexp
+  
+    rule expression
+      space? '(' body ')' space? <Expression>
+    end
+    
+    rule body
+      (expression / identifier / float / integer / string / space )* <Body>
+    end
+  
+    rule integer
+      ('+' / '-')? [0-9]+ <IntegerLiteral>
+    end
+    
+    rule float
+      ('+' / '-')? [0-9]+ (('.' [0-9]+) / ('e' [0-9]+)) <FloatLiteral>
+    end
+    
+    rule string
+      '"' ([^"\\] / "\\" . )* '"' <StringLiteral>
+    end
+    
+    rule identifier
+      [a-zA-Z\=\*] [a-zA-Z0-9_\=\*]* <Identifier>
+    end
+  
+    rule space
+      [\s]+
+    end
+    
+  end
+  
+=== More Info
+
+For more info visit the {Treetop website}[http://treetop.rubyforge.org/], and have a read through the source-code of this parser (don't worry, there isn't much of it!).
+  
+=== Author & Credits
+
+Author:: {Aaron Gough}[mailto:aaron@aarongough.com]
+
+Copyright (c) 2010 {Aaron Gough}[http://thingsaaronmade.com/] ({thingsaaronmade.com}[http://thingsaaronmade.com/]), released under the MIT license
