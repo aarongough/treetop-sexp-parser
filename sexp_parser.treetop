@@ -1,3 +1,9 @@
+# This file contains the PEG grammar definition that
+# Treetop uses to generate our parser.
+#
+# For more information check out the Treetop site:
+# http://treetop.rubyforge.org/
+
 grammar Sexp
 
   rule expression
